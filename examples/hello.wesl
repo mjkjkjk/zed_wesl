@@ -26,5 +26,6 @@ fn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {
   color = teal();
 
   let noise = pcg(1u, 2u);
-  return color * noise;
+  let light_count = constants::NumLights;
+  return color * noise * f32(light_count);
 }
