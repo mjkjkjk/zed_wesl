@@ -1,0 +1,11 @@
+id = "zed-wesl"
+name = "WESL"
+version = "0.1.0"
+schema_version = 1
+authors = ["Mateusz Kulesza <mateusz.jan.kulesza@gmail.com>"]
+description = "WESL and WGSL language support for Zed, including WESL imports, conditional compilation, and Bevy's naga_oil preprocessor."
+repository = "https://github.com/mjkjkjk/zed_wesl"
+
+[grammars.wesl]
+repository = "https://github.com/wgsl-tooling-wg/tree-sitter-wesl"
+rev = "b600a65818e4dd7f4d32407d1427643c27f3c389"
