@@ -1,4 +1,4 @@
-// Bevy / naga_oil example. Open this file with the WESL language selected.
+// Bevy / naga_oil example.
 #import bevy_pbr::mesh_view_bindings::view
 #import bevy_pbr::forward_io::{Vertex, VertexOutput}
 

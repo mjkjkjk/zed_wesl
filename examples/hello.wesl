@@ -1,4 +1,4 @@
-// WESL example: imports, aliases, nested imports, and conditional compilation.
+// WESL example.
 import package::utils::color::red;
 import package::utils::color::{chartreuse, teal};
 import random_wgsl::pcg_2u_3f as pcg;

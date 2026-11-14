@@ -3,7 +3,7 @@ name = "WESL"
 version = "0.1.0"
 schema_version = 1
 authors = ["Mateusz Kulesza <mateusz.jan.kulesza@gmail.com>"]
-description = "WESL and WGSL language support for Zed, including WESL imports, conditional compilation, and Bevy's naga_oil preprocessor."
+description = "WESL and WGSL syntax highlighting, including Bevy naga_oil shaders."
 repository = "https://github.com/mjkjkjk/zed_wesl"
 
 [grammars.wesl]

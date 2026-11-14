@@ -1,58 +1,27 @@
 # WESL for Zed
 
-Language support for [WESL](https://wesl-lang.dev), the WebGPU Extended Shading
-Language, and for WGSL shaders that use [Bevy](https://bevyengine.org)'s
-`naga_oil` preprocessor.
+[WESL](https://wesl-lang.dev) and Bevy [`naga_oil`](https://github.com/bevyengine/naga_oil)
+shader support for Zed, powered by
+[`tree-sitter-wesl`](https://github.com/wgsl-tooling-wg/tree-sitter-wesl).
 
-WESL is a strict superset of WGSL. This extension uses the
-[`tree-sitter-wesl`](https://github.com/wgsl-tooling-wg/tree-sitter-wesl)
-grammar, so the same language handles plain WGSL, WESL modules, and Bevy's
-shader extensions.
+Handles WESL modules, plain WGSL, and `.wgsl` files using Bevy's preprocessor.
 
 ## Features
 
-- Syntax highlighting for WESL and WGSL
-- WESL `import` statements, including nested imports, aliases, wildcards, and
-  `public` / `private` visibility
-- WESL conditional compilation with `@if`, `@elif`, and `@else`
-- Qualified paths such as `package::utils::color`, `super::util`, and
-  `constants::NumLights`
-- Bevy / `naga_oil` extensions, including `#import`, `#define`, `#ifdef`,
-  `#ifndef`, `#else`, `#endif`, and `virtual` / `override` functions
-- Bracket matching, auto-indentation, code outline, text objects, and comment
-  injection
-- Both `.wesl` and `.wgsl` files are associated with the language
+- WESL imports, aliases, wildcards, visibility, and qualified paths
+- `@if` / `@elif` / `@else` conditional compilation
+- Bevy `#import`, `#define`, `#ifdef`, `#ifndef`, `#else`, `#endif`, `virtual`, and `override`
+- Syntax highlighting, brackets, indentation, outline, text objects, and comment injection
 
-## Installation
+## Install
 
-### As a dev extension
-
-1. Open Zed's extension page (`zed: extensions`).
-2. Click **Install Dev Extension**.
-3. Select this repository.
-
-Zed compiles the Tree-sitter grammar on first install. This requires Rust and
-Zed's normal extension toolchain; Zed downloads the
-[WASI SDK](https://github.com/WebAssembly/wasi-sdk) automatically if needed.
-
-### From a published extension
-
-Once published, install **WESL** from the Zed extension registry.
+Open **Extensions** in Zed, click **Install Dev Extension**, and select this
+repository. Zed compiles the Tree-sitter grammar on first install.
 
 ## File associations
 
-The language is registered for both `.wesl` and `.wgsl` files so that it works
-out of the box in Bevy projects, which commonly use `.wgsl` files with
-`naga_oil` directives:
-
-| Extensions | Typical use |
-| --- | --- |
-| `.wesl` | WESL modules linked with `wesl-rs` / `wesl` |
-| `.wgsl` | WGSL or Bevy shaders with `#import` / `#ifdef` |
-
-If another WGSL extension is installed, it may also claim `.wgsl` files. Zed
-lets you choose the language for a buffer from the language selector. To make
-the association explicit, add this to your Zed settings:
+`.wesl` and `.wgsl` both use the WESL language. If another WGSL extension also
+claims `.wgsl`, pick the language from the language selector or add:
 
 ```json
 {
@@ -63,10 +32,6 @@ the association explicit, add this to your Zed settings:
 ```
 
 ## Bevy
-
-Bevy's shader pipeline uses `naga_oil` directives in `.wgsl` files. The grammar
-accepts these as part of the language and highlights them as preprocessor
-directives:
 
 ```wgsl
 #import bevy_pbr::mesh_view_bindings::view
@@ -84,24 +49,21 @@ fn vertex(vertex: Vertex) -> VertexOutput {
 }
 ```
 
-The extension only provides syntax support. Linking or validating shaders is
-done by Bevy and the `wesl` / `naga_oil` crates at build time.
+This extension is syntax-only. Linking and validation happen in Bevy through
+the `wesl` / `naga_oil` crates.
 
-## Language server (optional)
+## Optional language server
 
-This extension intentionally does not bundle a language server. For
-diagnostics, go-to-definition, and completions you can configure one yourself
-in Zed's `settings.json`.
-
-For WESL projects using [`wesl-lsp`](https://github.com/fdatoo/wesl-lsp):
+No LSP is bundled. To use
+[`wesl-lsp`](https://github.com/fdatoo/wesl-lsp) or
+[`wgsl-analyzer`](https://github.com/wgsl-analyzer/wgsl-analyzer), configure it
+in `settings.json`:
 
 ```json
 {
   "lsp": {
     "wesl-lsp": {
-      "binary": {
-        "path": "/path/to/wesl-lsp"
-      }
+      "binary": { "path": "/path/to/wesl-lsp" }
     }
   },
   "languages": {
@@ -112,22 +74,13 @@ For WESL projects using [`wesl-lsp`](https://github.com/fdatoo/wesl-lsp):
 }
 ```
 
-[`wgsl-analyzer`](https://github.com/wgsl-analyzer/wgsl-analyzer) can be used
-the same way. Note that it does not understand every WESL extension yet, so it
-may report errors on valid WESL files.
+`wgsl-analyzer` does not understand every WESL extension yet and may report
+errors on valid files.
 
 ## Development
 
-The grammar is pinned in `extension.toml`:
-
-```toml
-[grammars.wesl]
-repository = "https://github.com/wgsl-tooling-wg/tree-sitter-wesl"
-rev = "b600a65818e4dd7f4d32407d1427643c27f3c389"
-```
-
-Queries live in `languages/wesl/`. To validate them against the grammar, clone
-the grammar and run the Tree-sitter CLI:
+The grammar is pinned in `extension.toml`; queries are in `languages/wesl/`.
+To check queries:
 
 ```sh
 git clone https://github.com/wgsl-tooling-wg/tree-sitter-wesl /tmp/tree-sitter-wesl
@@ -139,10 +92,10 @@ npx --yes tree-sitter-cli@0.25.8 query \
 
 ## Credits
 
-- [tree-sitter-wesl](https://github.com/wgsl-tooling-wg/tree-sitter-wesl) by the
-  WESL project (MIT / Apache-2.0, with portions derived from
+- [tree-sitter-wesl](https://github.com/wgsl-tooling-wg/tree-sitter-wesl), MIT /
+  Apache-2.0, with portions derived from
   [tree-sitter-wgsl](https://github.com/gpuweb/tree-sitter-wgsl) under the W3C
-  Software and Document License).
-- Query design was informed by
+  Software and Document License.
+- Query design inspired by
   [`lucascompython/wgsl-wesl-zed`](https://github.com/lucascompython/wgsl-wesl-zed)
   and [`fdatoo/wesl-zed`](https://github.com/fdatoo/wesl-zed), both MIT licensed.
