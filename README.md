@@ -134,7 +134,7 @@ git clone https://github.com/wgsl-tooling-wg/tree-sitter-wesl /tmp/tree-sitter-w
 cd /tmp/tree-sitter-wesl
 npx --yes tree-sitter-cli@0.25.8 query \
   /path/to/zed_wesl/languages/wesl/highlights.scm \
-  examples/hello.wesl
+  /path/to/zed_wesl/examples/hello.wesl
 ```
 
 ## Credits
