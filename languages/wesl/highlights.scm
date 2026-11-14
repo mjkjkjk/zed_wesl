@@ -156,8 +156,6 @@
   "const"
   "override"
   "virtual"
-  "public"
-  "private"
 ] @keyword
 
 [
@@ -190,7 +188,6 @@
 [
   "+"
   "-"
-  "*"
   "/"
   "%"
   "&"
@@ -224,6 +221,13 @@
   (shift_right_assign)
 ] @operator
 
+; `*` is both a multiplication/dereference operator and a wildcard import.
+(binary_expression
+  operator: "*" @operator)
+
+(unary_expression
+  operator: "*" @operator)
+
 ; Punctuation
 
 [
@@ -244,3 +248,7 @@
   "::"
   ";"
 ] @punctuation.delimiter
+
+; Wildcard imports
+(import_item
+  "*" @punctuation.special)
