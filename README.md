@@ -6,6 +6,10 @@ shader support for Zed, powered by
 
 Handles WESL modules, plain WGSL, and `.wgsl` files using Bevy's preprocessor.
 
+## Warning
+
+This was made with extensive help from LLMs, it might be ugly and not of super high quality, I just wanted a syntax highligher quickly.
+
 ## Features
 
 - WESL imports, aliases, wildcards, visibility, and qualified paths
