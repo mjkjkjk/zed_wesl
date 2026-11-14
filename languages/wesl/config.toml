@@ -1,8 +1,8 @@
 name = "WESL"
 grammar = "wesl"
 path_suffixes = ["wesl", "wgsl"]
-line_comments = ["// "]
-block_comment = { start = "/*", prefix = "* ", end = "*/", tab_size = 1 }
+line_comments = ["// ", "/// "]
+block_comment = { start = "/*", prefix = "", end = "*/", tab_size = 1 }
 documentation_comment = { start = "/**", prefix = "* ", end = "*/", tab_size = 1 }
 autoclose_before = ";:.,=}])>"
 tab_size = 4
